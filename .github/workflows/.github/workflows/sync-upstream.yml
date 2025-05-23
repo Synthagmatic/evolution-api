@@ -1,0 +1,17 @@
+name: Sync Upstream
+on:
+  schedule:
+    - cron: '0 0 * * *'  # Se ejecutará diariamente a medianoche UTC
+  workflow_dispatch:      # Permite ejecución manual desde la interfaz
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Sync upstream changes
+        uses: repo-sync/github-sync@v2
+        with:
+          source_repo: "EvolutionAPI/evolution-api"
+          source_branch: "main"
+          destination_branch: "main"
+          github_token: ${{ secrets.GITHUB_TOKEN }}
